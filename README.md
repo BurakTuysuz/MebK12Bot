@@ -1,7 +1,7 @@
 # MebK12Bot
+![Logo2](https://repository-images.githubusercontent.com/818005837/d4f270ff-f211-45c1-9b83-c9a97404b668)
 
 ![Logo](https://upload.wikimedia.org/wikipedia/commons/c/cc/Milli_E%C4%9Fitim_Bakanl%C4%B1%C4%9F%C4%B1_Logo.svg)
-
 
 # Meb K12 sitelerine görüntülenme ve beğeni sağlayan bot
 
