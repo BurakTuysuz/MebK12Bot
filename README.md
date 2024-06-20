@@ -70,12 +70,5 @@ cd MebK12Bot
 ```
 
 ```bash
-sudo python3 mebspammer.py
+python3 mebspammer.py
 ```
----
-
-
-## Legal Disclaimer
-
-
-This tool was created for education. The producer is not responsible for incorrect use. You agree that you use this software at your own risk. 
