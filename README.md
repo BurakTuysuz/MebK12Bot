@@ -37,7 +37,7 @@ sudo apt install python3 -y
 ```
 
 ```bash
-git clone https://github.com/BurakTuysuz/](https://github.com/BurakTuysuz/MebK12Bot.git
+git clone https://github.com/BurakTuysuz/MebK12Bot.git
 ```
 
 ---
