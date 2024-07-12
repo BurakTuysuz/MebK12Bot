@@ -83,7 +83,7 @@ def anakod():
             print("Hata: ", ee)
 
     else:
-        print("İşletim Sisteminiz Yalnızca Debian Tabanlı Linux Dağıtımı Olmalı")
+        print("İşletim Sisteminiz Yalnızca Linux Dağıtımı Olmalıdır")
 
 
 if __name__ == '__main__':
