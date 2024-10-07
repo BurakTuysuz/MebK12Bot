@@ -9,23 +9,10 @@ import requests
 import os
 
 
-def calistiralacaktarayici(browsername):
-    low = browsername.lower()
-
-    if low == 'chrome' or low == 'google' or low == 'googlechrome' or low == 'google chrome':
-        return webdriver.Chrome()
-    elif low == 'firefox':
-        return webdriver.Firefox()
-    elif low == 'edge':
-        return webdriver.Edge()
-    else:
-        print("\n", "Lütfen yalnızca Google chrome, Firefox veya Edge Tarayıcısı'nın ismini girin")
-
-
-def a(url, tarayici):
+def a(url):
     try:
         while True:
-            driver = calistiralacaktarayici(tarayici)
+            driver = webdriver.Edge()
             driver.get(url)
             button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='begen' and "
                                                                                            "@onclick]")))
@@ -33,9 +20,9 @@ def a(url, tarayici):
             driver.quit()
 
     except TimeoutException:
-        print("\n", "Hata: Düğme bulunamadı veya zaman aşımı oldu")
+        print("\n", "Hata: Zaman aşımı oldu")
     except Exception as e:
-        print("\n", f"Hata Buton Bulunamadı: {str(e)}")
+        print("\n", f"Hata: {str(e)}")
 
 
 def isim():
@@ -59,31 +46,27 @@ def isim():
 
 
 def anakod():
-    if os.name == "posix":
-        print('\n')
-        tarayicial = input('Bilgisayarınızda Yüklü Olan Web Tarayıcınızın İsmini Girin (Google, Firefox, Edge): ')
-        sor = input("Okul Sitesindeki İçerik Linkini Yapıştırın: ")
-        try:
-            al = requests.get(sor)
-            if al.status_code == 200:
-                sayi = int(
-                    input("İşlem Aynı Anda Kaç Defa Yapılsın (Yüksek Sayı Bilgisayarın Donmasına Neden Olabilir, "
-                          "Önerilen sayı: 5), (Açık olan programların kapatılması önerilir): "))
-                threads = [t.Thread(target=a, args=(sor, tarayicial)) for _ in range(sayi)]
+    print('\n')
+    sor = input("Okul Sitesindeki İçerik Linkini Yapıştırın: ")
+    try:
+        al = requests.get(sor)
+        if al.status_code == 200:
+            sayi = int(
+                input("İşlem Aynı Anda Kaç Defa Yapılsın (Yüksek Sayı Donmaya Neden Olabilir, "
+                      "Önerilen sayı: 5), (Lütfen Açık olan programları kapatın): "))
+            threads = [t.Thread(target=a, args=(sor)) for _ in range(sayi)]
 
-                for thread in threads:
-                    thread.start()
-            else:
-                print("Geçersiz Site")
+            for thread in threads:
+                thread.start()
+        else:
+            print("Geçersiz Link. Örnek link: https://okul.meb.k12.tr/icerikler/icerik_sayfasi.html")
 
-        except requests.exceptions.RequestException as e:
-            print("\n", "Geçersiz Site: ", e)
-            anakod()
-        except Exception as ee:
-            print("Hata: ", ee)
+    except requests.exceptions.RequestException as e:
+        print("\n", "Geçersiz Site: ", e)
+        anakod()
+    except Exception as ee:
+        print("Hata: ", ee)
 
-    else:
-        print("İşletim Sisteminiz Yalnızca Linux Dağıtımı Olmalıdır")
 
 
 if __name__ == '__main__':
