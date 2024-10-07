@@ -54,7 +54,7 @@ def anakod():
             sayi = int(
                 input("İşlem Aynı Anda Kaç Defa Yapılsın (Yüksek Sayı Donmaya Neden Olabilir, "
                       "Önerilen sayı: 5), (Lütfen Açık olan programları kapatın): "))
-            threads = [t.Thread(target=a, args=(sor)) for _ in range(sayi)]
+            threads = [t.Thread(target=a, args=(sor,)) for _ in range(sayi)]
 
             for thread in threads:
                 thread.start()
