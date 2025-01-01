@@ -12,7 +12,7 @@ import os
 def a(url):
     try:
         while True:
-            driver = webdriver.Edge()
+            driver = webdriver.Chrome()
             driver.get(url)
             button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='begen' and "
                                                                                            "@onclick]")))
