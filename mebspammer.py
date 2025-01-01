@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.options import Options
 import threading as t
 import requests
 import os
@@ -12,7 +13,9 @@ import os
 def a(url):
     try:
         while True:
-            driver = webdriver.Chrome()
+            chrome_options = Options()
+            chrome_options.add_argument("--headless")
+            driver = webdriver.Chrome(options=chrome_options)
             driver.get(url)
             button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='begen' and "
                                                                                            "@onclick]")))
@@ -26,7 +29,7 @@ def a(url):
 
 
 def isim():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('clear')
     print(Fore.LIGHTRED_EX)
     print(Style.BRIGHT)
     print("""
@@ -41,21 +44,17 @@ def isim():
                                                                                                                                           ███    ███ 
 
 
-                                                            İşlemi Durdurmak İçin Programı Kapatın
     """)
 
 
 def anakod():
-    print('\n')
-    sor = input("Okul Sitesindeki İçerik Linkini Yapıştırın: ")
+    sor = input("Okul Sitesindeki Icerik Linkini Yapıstırın: ")
     try:
         al = requests.get(sor)
         if al.status_code == 200:
-            sayi = int(
-                input("İşlem Aynı Anda Kaç Defa Yapılsın (Yüksek Sayı Donmaya Neden Olabilir, "
-                      "Önerilen sayı: 5), (Lütfen Açık olan programları kapatın): "))
+            sayi = int(input("Islem Ayni Anda Kac Defa Yapilsin - Yüksek Sayi Sorun Yaratabilir, Önerilen sayi: 10, (Lütfen Acik olan programlari kapatin): "))
             threads = [t.Thread(target=a, args=(sor,)) for _ in range(sayi)]
-
+            print("Goruntulenme ve begeni saglaniyor. Sonlandirmak icin yazilimi kapatin")
             for thread in threads:
                 thread.start()
         else:
@@ -64,9 +63,6 @@ def anakod():
     except requests.exceptions.RequestException as e:
         print("\n", "Geçersiz Site: ", e)
         anakod()
-    except Exception as ee:
-        print("Hata: ", ee)
-
 
 
 if __name__ == '__main__':
